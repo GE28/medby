@@ -5,7 +5,7 @@ import UserRoutes from './routes/UserRoutes';
 
 const publicRoutes = Router();
 
-publicRoutes.use('/', (req, res) => {
+publicRoutes.get('/', (req, res) => {
   return res.json({ msg: 'Hello Guest!' });
 });
 

@@ -17,7 +17,10 @@
     "sucrase": "^3.16.0"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pg": "^8.4.2",
+    "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0"
   },
   "scripts": {
     "dev": "nodemon src/server.js",
