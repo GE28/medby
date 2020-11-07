@@ -2,8 +2,25 @@
   "name": "Medby",
   "version": "0.0.1",
   "description": "Backend for Medby, a fictional healthcare center",
-  "main": "index.js",
+  "main": "src/server.js",
   "repository": "https://github.com/GE28/medby",
   "author": "GE28 <44209041+GE28@users.noreply.github.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.12.1",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.1.2",
+    "sucrase": "^3.16.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "debug": "nodemon --inspect src/server.js"
+  }
 }
