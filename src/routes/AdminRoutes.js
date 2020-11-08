@@ -1,9 +1,8 @@
 import { Router } from 'express';
+import UserController from '../app/controllers/UserController';
 
-const AdminRoutes = new Router();
+const adminRoutes = new Router();
 
-AdminRoutes.use('/', (req, res) => {
-  return res.json({ msg: 'Hello Admin!' });
-});
+adminRoutes.get('/users/list', UserController.index);
 
-export default AdminRoutes;
+export default adminRoutes;

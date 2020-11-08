@@ -1,15 +1,11 @@
 import { Router } from 'express';
 
-import AdminRoutes from './routes/AdminRoutes';
-import UserRoutes from './routes/UserRoutes';
+import AdminRoutes from './routes/adminRoutes';
+import UserRoutes from './routes/userRoutes';
 
 const publicRoutes = Router();
 
-publicRoutes.get('/', (req, res) => {
-  return res.json({ msg: 'Hello Guest!' });
-});
-
-publicRoutes.use('/user/', UserRoutes);
+publicRoutes.use(UserRoutes);
 publicRoutes.use('/admin/', AdminRoutes);
 
 export default publicRoutes;

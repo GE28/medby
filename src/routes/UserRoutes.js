@@ -1,9 +1,8 @@
 import { Router } from 'express';
+import UserController from '../app/controllers/UserController';
 
-const UserRoutes = new Router();
+const userRoutes = new Router();
 
-UserRoutes.use('/', (req, res) => {
-  return res.json({ msg: 'Hello User!' });
-});
+userRoutes.post('/signup', UserController.store);
 
-export default UserRoutes;
+export default userRoutes;
