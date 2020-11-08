@@ -1,7 +1,8 @@
 import Express, { json } from 'express';
 
-import Connection from './app/models'; // starting Sequelize
+import './app/models'; // starting Sequelize
 import routes from './routes';
+import jsonValidator from './middlewares/jsonValidator';
 
 class App {
   constructor() {
@@ -13,6 +14,7 @@ class App {
 
   middlewares() {
     this.app.use(json());
+    this.app.use(jsonValidator);
   }
 }
 

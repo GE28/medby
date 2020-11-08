@@ -12,6 +12,24 @@ class UserController {
     return res.json(userList);
   }
 
+  async show(req, res) {
+    const { id } = req.params;
+
+    const user = await User.findByPk(id, {
+      attributes: {
+        exclude: ['created_at', 'updated_at', 'password_hash'],
+      },
+    });
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ error: 'The specified user was not found' });
+    }
+
+    return res.json(user);
+  }
+
   async store(req, res) {
     const schema = Joi.object({
       name: Joi.string().max(72),
@@ -42,7 +60,7 @@ class UserController {
       return res.status(500).json({ error: 'Internal server error' });
     }
 
-    return res.json(body);
+    return res.status(201).json(body);
   }
 }
 
