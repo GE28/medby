@@ -1,3 +1,4 @@
+import Joi from '@hapi/joi';
 import User from '../models/User';
 
 class UserController {
@@ -12,8 +13,23 @@ class UserController {
   }
 
   async store(req, res) {
+    const schema = Joi.object({
+      name: Joi.string().max(72),
+      email: Joi.string().email(),
+      password: Joi.string().alphanum().min(8).max(20),
+      cpf: Joi.string().length(11),
+    }).options({ presence: 'required' });
+
+    let body;
+
     try {
-      const created = await User.create(req.body);
+      body = await schema.validateAsync(req.body);
+    } catch (err) {
+      return res.status(400).json({ error: 'Bad request' });
+    }
+
+    try {
+      const created = await User.create(body);
     } catch (err) {
       if (err.fields) {
         if (err.fields.email)
@@ -26,7 +42,7 @@ class UserController {
       return res.status(500).json({ error: 'Internal server error' });
     }
 
-    return res.json(req.body);
+    return res.json(body);
   }
 }
 
