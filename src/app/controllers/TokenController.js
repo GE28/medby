@@ -1,4 +1,4 @@
-import jwt, { sign } from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 import Joi from '@hapi/joi';
 
 import User from '../models/User';
