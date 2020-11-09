@@ -15,7 +15,7 @@ module.exports = {
         allowNull: false,
       },
       complements: {
-        type: Sequelize.STRING(64),
+        type: Sequelize.STRING(36),
         allowNull: false,
       },
       created_at: {
