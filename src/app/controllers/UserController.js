@@ -13,7 +13,17 @@ class UserController {
   }
 
   async show(req, res) {
-    const { id } = req.params;
+    if (req.params.id) {
+      try {
+        const validated = await Joi.string()
+          .uuid()
+          .validateAsync(req.params.id);
+      } catch (err) {
+        return res.status(400).json({ error: 'You must provide a valid UUID' });
+      }
+    }
+
+    const id = req.userId || req.params.id;
 
     const user = await User.findByPk(id, {
       attributes: {
