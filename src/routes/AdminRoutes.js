@@ -2,11 +2,16 @@ import { Router } from 'express';
 import UserController from '../app/controllers/UserController';
 
 import idValidator from '../middlewares/idValidator';
+import tokenValidator from '../middlewares/tokenValidator';
 
 const adminRoutes = new Router();
 
-adminRoutes.get('/users/list', UserController.index);
+const tokenVal = tokenValidator('A');
 
-adminRoutes.get('/users/:id', idValidator, UserController.show);
+const tokenIdVal = [tokenVal, idValidator];
+
+adminRoutes.get('/users/list', tokenVal, UserController.index);
+
+adminRoutes.get('/users/:id', tokenIdVal, UserController.show);
 
 export default adminRoutes;
