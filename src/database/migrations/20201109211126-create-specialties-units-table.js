@@ -4,7 +4,7 @@ module.exports = {
       spec_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        references: { model: 'specialities', key: 'id' },
+        references: { model: 'specialties', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
