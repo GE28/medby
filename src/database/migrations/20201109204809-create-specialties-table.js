@@ -2,9 +2,8 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('specialties', {
       id: {
+        type: Sequelize.UUID,
         primaryKey: true,
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
       },
       name: {
         type: Sequelize.STRING(32),

@@ -2,14 +2,14 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('spec_units', {
       spec_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
         references: { model: 'specialties', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
       unit_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
         references: { model: 'units', key: 'id' },
         onUpdate: 'CASCADE',
