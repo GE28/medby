@@ -71,10 +71,6 @@ class DoctorController {
     const { document } = body;
 
     try {
-      const doctor = await Doctor.findOne({
-        where: { document },
-      });
-
       const doctorUnit = await Unit.findByPk(body.unit_id);
 
       if (!doctorUnit) {
