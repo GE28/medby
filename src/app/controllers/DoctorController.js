@@ -31,12 +31,16 @@ class DoctorController {
         {
           model: Unit,
           as: 'unit',
-          attributes: ['name'],
+          attributes: {
+            exclude: ['created_at', 'updated_at'],
+          },
         },
         {
           model: Specialty,
           as: 'specialty',
-          attributes: ['display_name', 'base_price'],
+          attributes: {
+            exclude: ['created_at', 'updated_at'],
+          },
         },
       ],
     });

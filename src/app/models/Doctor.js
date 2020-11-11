@@ -33,6 +33,7 @@ class Doctor extends Model {
     at the time this doctor gets deleted from system, destroy the association */
     this.addHook('beforeDestroy', async (doctor) => {
       const { unit_id, spec_id, id } = doctor;
+
       const doctorList = await this.findAll({
         where: {
           unit_id,
@@ -45,6 +46,7 @@ class Doctor extends Model {
         const specUnit = await SpecUnit.findOne({
           where: { unit_id, spec_id },
         });
+
         const deleted = await specUnit.destroy();
       }
     });
