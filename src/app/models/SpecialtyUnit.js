@@ -5,11 +5,11 @@ class SpecUnit extends Model {
     super.init(
       {
         spec_id: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.UUID,
           primaryKey: true,
         },
         unit_id: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.UUID,
           primaryKey: true,
         },
       },
