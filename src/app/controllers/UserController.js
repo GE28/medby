@@ -3,7 +3,11 @@ import User from '../models/User';
 
 class UserController {
   async index(req, res) {
+    const page = Math.round(req.query.page) || 1;
+
     const userList = await User.findAll({
+      offset: page * 10 - 10,
+      limit: 10,
       attributes: {
         exclude: ['password_hash'],
       },

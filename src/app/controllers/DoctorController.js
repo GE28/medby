@@ -5,7 +5,11 @@ import Specialty from '../models/Specialty';
 
 class DoctorController {
   async index(req, res) {
+    const page = Math.round(req.query.page) || 1;
+
     const doctorList = await Doctor.findAll({
+      offset: page * 10 - 10,
+      limit: 10,
       include: [
         {
           model: Unit,
