@@ -35,14 +35,14 @@ adminRoutes.post('/units/', tokenVal, UnitController.store);
 
 adminRoutes.delete('/units/:id', tokenIdVal, UnitController.delete);
 
-adminRoutes.get('/specialty/list', tokenVal, SpecialtyController.index);
+adminRoutes.get('/specialties/list', tokenVal, SpecialtyController.index);
 
-adminRoutes.get('/specialty/:id', tokenIdVal, SpecialtyController.show);
+adminRoutes.get('/specialties/:id', tokenIdVal, SpecialtyController.show);
 
-adminRoutes.get('/specialty/:id', tokenIdVal, SpecialtyController.update);
+adminRoutes.get('/specialties/:id', tokenIdVal, SpecialtyController.update);
 
-adminRoutes.post('/specialty/', tokenVal, SpecialtyController.store);
+adminRoutes.post('/specialties/', tokenVal, SpecialtyController.store);
 
-adminRoutes.delete('/specialty/:id', tokenIdVal, SpecialtyController.delete);
+adminRoutes.delete('/specialties/:id', tokenIdVal, SpecialtyController.delete);
 
 export default adminRoutes;
