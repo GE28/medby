@@ -1,6 +1,8 @@
 import Express, { json } from 'express';
 
 import './app/models'; // starting Sequelize
+import './app/models/mongo'; // starting Mongoose
+
 import routes from './routes';
 import jsonValidator from './middlewares/jsonValidator';
 
