@@ -1,8 +1,9 @@
-import { Router, RouterOptions } from 'express';
+import { Router } from 'express';
 import UserController from '../app/controllers/UserController';
 import DoctorController from '../app/controllers/DoctorController';
 import UnitController from '../app/controllers/UnitController';
 import SpecialtyController from '../app/controllers/SpecialtyController';
+import TimetableController from '../app/controllers/TimetableController';
 
 import idValidator from '../middlewares/idValidator';
 import tokenValidator from '../middlewares/tokenValidator';
@@ -43,6 +44,12 @@ adminRoutes.get('/specialties/:id', tokenIdVal, SpecialtyController.update);
 
 adminRoutes.post('/specialties/', tokenVal, SpecialtyController.store);
 
-adminRoutes.delete('/specialties/:id', tokenIdVal, SpecialtyController.delete);
+adminRoutes.delete('/timetable/:id', tokenIdVal, TimetableController.delete);
+
+adminRoutes.get('/timetable/list', tokenVal, TimetableController.index);
+
+adminRoutes.post('/timetable/', tokenVal, TimetableController.store);
+
+adminRoutes.delete('/timetable/:id', tokenIdVal, TimetableController.delete);
 
 export default adminRoutes;
