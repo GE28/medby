@@ -33,9 +33,8 @@ export default async (job) => {
   timetables.forEach((timetable) => {
     // If this week's Wednesday is over, use next week's Wednesday instead
     let { weekday } = timetable;
-    const { doctor_id, minute, hour, spec_id, unit_id } = timetable;
 
-    console.log({ doctor_id, minute, hour, spec_id, unit_id });
+    const { doctor_id, minute, hour, spec_id, unit_id } = timetable;
 
     weekday = weekday < today ? weekday + 7 : weekday;
 
