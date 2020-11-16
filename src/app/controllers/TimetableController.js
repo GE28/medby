@@ -7,7 +7,6 @@ class TimetableController {
     const page = Math.round(req.query.page) || 1;
 
     const timetable = await Timetable.findAll({
-      // If page == 1 show the first 10 entries, if 2 show from 11 to 20
       offset: page * 10 - 10,
       limit: 10,
       include: [
