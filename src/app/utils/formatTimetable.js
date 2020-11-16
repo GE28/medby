@@ -3,7 +3,7 @@ export default (timetables) =>
     const { doctor_id } = timetable;
     const { spec_id, unit_id } = timetable.doctor;
 
-    let arr = timetable.date.split('-');
+    let arr = timetable.timetable.split('-');
     arr = arr.map((n) => Number(n));
     const [weekday, hour, minute] = arr;
 
