@@ -39,20 +39,20 @@ class TimetableController {
       return res.status(400).json({ error: 'Bad request' });
     }
 
+    const doctor = await Doctor.findByPk(body.spec_id);
+
+    if (!doctor) {
+      return res.status(404).json({ error: 'Specified doctor was not found' });
+    }
+
     try {
-      const doctor = await Doctor.findByPk(body.spec_id);
-
-      if (!doctor) {
-        return res
-          .status(404)
-          .json({ error: 'Specified doctor was not found' });
-      }
-
       const created = await Timetable.create(body);
 
       return res.json(created.get({ plain: true }));
     } catch (err) {
-      return res.status(500).json({ error: 'Internal server error' });
+      return res
+        .status(500)
+        .json({ error: 'Same timetable for this doctor found' });
     }
   }
 

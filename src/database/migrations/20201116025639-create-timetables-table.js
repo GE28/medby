@@ -3,12 +3,14 @@ module.exports = {
     return queryInterface.createTable('timetables', {
       doctor_id: {
         type: Sequelize.UUID,
+        primaryKey: true,
         references: { model: 'doctors', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
       timetable: {
         type: Sequelize.STRING(7),
+        primaryKey: true,
         allowNull: false,
       },
       created_at: {
