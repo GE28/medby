@@ -2,6 +2,7 @@ import { Router } from 'express';
 import UserController from '../app/controllers/UserController';
 import TokenController from '../app/controllers/TokenController';
 import AppointmentController from '../app/controllers/AppointmentController';
+import ATimeController from '../app/controllers/AvailableTimeController';
 
 import idValidator from '../middlewares/idValidator';
 import tokenValidator from '../middlewares/tokenValidator';
@@ -22,6 +23,6 @@ userRoutes.get('/appointments/:id', tokenIdVal, AppointmentController.show);
 
 userRoutes.get('/appointments/:id', tokenIdVal, AppointmentController.update);
 
-userRoutes.post('/appointments/', tokenVal, AppointmentController.store);
+userRoutes.post('/appointments/available/', tokenVal, ATimeController.index);
 
 export default userRoutes;
