@@ -1,6 +1,6 @@
 import Mongoose from 'mongoose';
 
-const Schedule = new Mongoose.Schema({
+const AvailableTime = new Mongoose.Schema({
   doctor_id: {
     type: Number,
     required: true,
@@ -24,6 +24,6 @@ const Schedule = new Mongoose.Schema({
   },
 });
 
-Schedule.index({ doctor_id: 1, date: 1 }, { unique: true });
+AvailableTime.index({ doctor_id: 1, date: 1 }, { unique: true });
 
-export default Mongoose.model('Schedule', Schedule);
+export default Mongoose.model('AvailableTime', AvailableTime);
