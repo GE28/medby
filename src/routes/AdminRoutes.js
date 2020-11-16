@@ -4,6 +4,7 @@ import DoctorController from '../app/controllers/DoctorController';
 import UnitController from '../app/controllers/UnitController';
 import SpecialtyController from '../app/controllers/SpecialtyController';
 import TimetableController from '../app/controllers/TimetableController';
+import AppointmentController from '../app/controllers/AppointmentController';
 
 import idValidator from '../middlewares/idValidator';
 import tokenValidator from '../middlewares/tokenValidator';
@@ -51,5 +52,7 @@ adminRoutes.get('/timetable/list', tokenVal, TimetableController.index);
 adminRoutes.post('/timetable/', tokenVal, TimetableController.store);
 
 adminRoutes.delete('/timetable/:id', tokenIdVal, TimetableController.delete);
+
+adminRoutes.get('/appointments/list', tokenVal, SpecialtyController.index);
 
 export default adminRoutes;
