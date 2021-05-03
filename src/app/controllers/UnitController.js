@@ -107,7 +107,7 @@ class UnitController {
       return res.status(400).json({ error: 'Specified unit was not found' });
     }
 
-    const deleted = await unit.destroy();
+    const _deleted = await unit.destroy();
 
     return res.json({ message: 'Specified unit successful deleted' });
   }

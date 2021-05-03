@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable no-unused-vars */
 const { v4: uuidv4 } = require('uuid');
 
 const now = new Date();
@@ -187,42 +187,62 @@ module.exports = {
       {
         doctor_id: uuids.doctor[0],
         timetable: '1-8-30',
+        created_at: now,
+        updated_at: now,
       },
       {
         doctor_id: uuids.doctor[0],
         timetable: '1-10-30',
+        created_at: now,
+        updated_at: now,
       },
       {
         doctor_id: uuids.doctor[1],
         timetable: '2-18-30',
+        created_at: now,
+        updated_at: now,
       },
       {
         doctor_id: uuids.doctor[2],
         timetable: '3-14-30',
+        created_at: now,
+        updated_at: now,
       },
       {
         doctor_id: uuids.doctor[2],
         timetable: '4-15-15',
+        created_at: now,
+        updated_at: now,
       },
       {
         doctor_id: uuids.doctor[3],
         timetable: '5-7-30',
+        created_at: now,
+        updated_at: now,
       },
       {
         doctor_id: uuids.doctor[4],
         timetable: '2-11-30',
+        created_at: now,
+        updated_at: now,
       },
       {
         doctor_id: uuids.doctor[5],
         timetable: '5-12-30',
+        created_at: now,
+        updated_at: now,
       },
       {
         doctor_id: uuids.doctor[6],
         timetable: '4-17-30',
+        created_at: now,
+        updated_at: now,
       },
       {
         doctor_id: uuids.doctor[7],
         timetable: '4-16-30',
+        created_at: now,
+        updated_at: now,
       },
     ];
 

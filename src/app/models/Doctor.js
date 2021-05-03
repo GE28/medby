@@ -12,6 +12,7 @@ class Doctor extends Model {
           primaryKey: true,
         },
         name: Sequelize.STRING(72),
+        avatar: Sequelize.STRING,
         document: Sequelize.STRING(13),
       },
       { sequelize, tableName: 'doctors' }
@@ -23,7 +24,7 @@ class Doctor extends Model {
       if (doctor.unit_id) {
         const { unit_id, spec_id } = doctor;
 
-        const specUnit = await SpecUnit.findOrCreate({
+        const _specUnit = await SpecUnit.findOrCreate({
           where: { spec_id, unit_id },
         });
       }
@@ -47,7 +48,7 @@ class Doctor extends Model {
           where: { unit_id, spec_id },
         });
 
-        const deleted = await specUnit.destroy();
+        const _deleted = await specUnit.destroy();
       }
     });
 

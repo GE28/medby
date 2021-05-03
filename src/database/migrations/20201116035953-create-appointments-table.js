@@ -3,7 +3,6 @@ module.exports = {
     return queryInterface.createTable('appointments', {
       id: {
         type: Sequelize.UUID,
-        autoIncrement: true,
         primaryKey: true,
       },
       user_id: {

@@ -3,7 +3,7 @@ import User from '../models/User';
 
 class UserController {
   async index(req, res) {
-    const page = Math.round(req.query.page) || 1;
+    const page = Math.round(req.query.page) > 0 || 1;
 
     const userList = await User.findAll({
       offset: page * 10 - 10,
@@ -17,13 +17,15 @@ class UserController {
   }
 
   async show(req, res) {
-    if (req.params.id) {
+    if (!req.userId) {
       try {
-        const validated = await Joi.string()
+        const _validated = await Joi.string()
           .uuid()
           .validateAsync(req.params.id);
       } catch (err) {
-        return res.status(400).json({ error: 'You must provide a valid UUID' });
+        return res
+          .status(400)
+          .json({ error: 'You must provide a valid user ID' });
       }
     }
 
@@ -61,7 +63,7 @@ class UserController {
     }
 
     try {
-      const created = await User.create(body);
+      const _created = await User.create(body);
     } catch (err) {
       if (err.fields) {
         if (err.fields.email)

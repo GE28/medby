@@ -9,17 +9,21 @@ import tokenValidator from '../middlewares/tokenValidator';
 
 const userRoutes = new Router();
 
-userRoutes.post('/signup', UserController.store);
+userRoutes.post('/register', UserController.store);
 userRoutes.post('/login', TokenController.store);
 
-const tokenVal = tokenValidator('U');
+const tokenMiddleware = tokenValidator('U');
 
-userRoutes.get('/profile', tokenVal, UserController.show);
+userRoutes.get('/profile', tokenMiddleware, UserController.show);
 
-const tokenIdVal = [tokenVal, idValidator];
+const middlewares = [tokenMiddleware, idValidator];
 
-userRoutes.get('/appointments/:id', tokenIdVal, AppointmentController.show);
-userRoutes.get('/appointments/:id', tokenIdVal, AppointmentController.update);
-userRoutes.post('/appointments/available/', tokenVal, ATimeController.index);
+userRoutes.get('/appointments/:id', middlewares, AppointmentController.show);
+userRoutes.get(
+  '/appointments/available',
+  tokenMiddleware,
+  ATimeController.index
+);
+userRoutes.put('/appointments/:id', middlewares, AppointmentController.update);
 
 export default userRoutes;

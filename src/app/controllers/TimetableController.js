@@ -4,7 +4,7 @@ import Doctor from '../models/Doctor';
 
 class TimetableController {
   async index(req, res) {
-    const page = Math.round(req.query.page) || 1;
+    const page = Math.round(req.query.page) > 0 || 1;
 
     const timetable = await Timetable.findAll({
       offset: page * 10 - 10,
@@ -66,7 +66,7 @@ class TimetableController {
         .json({ error: 'Specified timetable was not found' });
     }
 
-    const deleted = await timetable.destroy();
+    const _deleted = await timetable.destroy();
 
     return res.json({ message: 'Specified timetable successful deleted' });
   }

@@ -4,7 +4,7 @@ import Specialty from '../models/Specialty';
 
 class SpecialtyController {
   async index(req, res) {
-    const page = Math.round(req.query.page) || 1;
+    const page = Math.round(req.query.page) > 0 || 1;
 
     const specList = await Specialty.findAll({
       // If page == 1 show the first 10 entries, if 2 show from 11 to 20
@@ -133,7 +133,7 @@ class SpecialtyController {
         .json({ error: 'Specified specialty was not found' });
     }
 
-    const deleted = await specialty.destroy();
+    const _deleted = await specialty.destroy();
 
     return res.json({ message: 'Specified specialty successful deleted' });
   }

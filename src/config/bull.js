@@ -1,9 +1,19 @@
+const {
+  REDIS_HOST: host = '',
+  REDIS_PORT = '6379',
+  REDIS_PASSWORD = '',
+} = process.env;
+
+const REDIS_HOST = `${host}:${REDIS_PORT}`;
+
 export default {
   options: {
-    allowedFutureWeeks: 3,
-    minPastHours: 2,
+    // the client can book an appointment for up to (value) weeks after the current date
+    allowedFutureWeeks: process.env.FUTURE_WEEKS || 3,
+    // the client can book or cancel an appointment up to (value) hours before it's time
+    minPastHours: process.env.PAST_HOURS || 6,
   },
   redis: {
-    url: 'redis://127.0.0.1:6379',
+    url: process.env.REDIS_URL || `redis://:${REDIS_PASSWORD}@${REDIS_HOST}`,
   },
 };

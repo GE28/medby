@@ -7,10 +7,9 @@ import AvailableTime from '../models/mongo/AvailableTime';
 import formatTimetable from '../utils/formatTimetable';
 
 export default async (job) => {
-  const { allowedFutureWeeks = 1 } = job.data;
+  const { allowedFutureWeeks } = job.data;
 
-  // User can schedule an appointment up to (minPastHours) hours before it's time
-  const { minPastHours = 2 } = job.data;
+  const { minPastHours } = job.data;
 
   const refDate = addHours(new Date(), minPastHours);
 
@@ -25,7 +24,8 @@ export default async (job) => {
     },
   });
 
-  // '3-18-00' => wed 18:00, '0-20-30' => sun 20:30
+  // '3-18-00' => wed 18:00
+  // '0-20-30' => sun 20:30
   timetables = formatTimetable(timetables);
 
   const nextAvailableTimes = [];
@@ -51,12 +51,14 @@ export default async (job) => {
     }
   });
 
-  const deleted = await AvailableTime.deleteMany({
+  const _deleted = await AvailableTime.deleteMany({
     $or: [
       { date: { $lt: refDate } },
       { date: { $gt: addDays(refDate, allowedFutureWeeks * 7) } },
     ],
   });
 
-  const created = await AvailableTime.create(nextAvailableTimes);
+  console.log(nextAvailableTimes);
+
+  const _created = await AvailableTime.create(nextAvailableTimes);
 };

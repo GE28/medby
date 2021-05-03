@@ -3,7 +3,7 @@ import config from '../config/jsonwebtoken';
 
 const { secret } = config;
 
-export default function tokenValidatorCall(target, ab) {
+export default function tokenValidatorCall(target) {
   return function tokenValidator(req, res, next) {
     let token = req.headers.authorization;
 
@@ -19,7 +19,7 @@ export default function tokenValidatorCall(target, ab) {
       req.userType = decoded.userType; // userType
       req.userId = decoded.userId; // userId
     } catch (err) {
-      if (token === 'topsecretinformation') {
+      if (token === process.env.ADMIN_KEY) {
         req.userType = 'A'; // Admin
       } else
         return res.status(401).json({ message: 'Expired or invalid token' });

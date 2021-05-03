@@ -7,7 +7,7 @@ import Speciality from '../models/Specialty';
 
 class AppointmentController {
   async index(req, res) {
-    const page = Math.round(req.query.page) || 1;
+    const page = Math.round(req.query.page) > 0 || 1;
 
     const appointmentList = await Appointment.findAll({
       offset: page * 10 - 10,
@@ -116,7 +116,7 @@ class AppointmentController {
     try {
       const created = await Appointment.create(body);
 
-      const updatedTime = await availableTime.update({ taken: true });
+      const _updatedTime = await availableTime.update({ taken: true });
 
       const data = created.get({ plain: true });
 
@@ -165,9 +165,9 @@ class AppointmentController {
         timetable: time,
       });
 
-      const updated = await appointment.update({ status: 'C' });
+      const _updated = await appointment.update({ status: 'C' });
 
-      const updatedTime = await availableTime.update({ taken: false });
+      const _updatedTime = await availableTime.update({ taken: false });
 
       return res.json({ msg: 'Appointment cancelled successfully' });
     }

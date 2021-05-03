@@ -5,7 +5,7 @@ import Specialty from '../models/Specialty';
 
 class DoctorController {
   async index(req, res) {
-    const page = Math.round(req.query.page) || 1;
+    const page = Math.round(req.query.page) > 0 || 1;
 
     const doctorList = await Doctor.findAll({
       offset: page * 10 - 10,
@@ -72,8 +72,6 @@ class DoctorController {
       return res.status(400).json({ error: 'Bad request' });
     }
 
-    const { document } = body;
-
     try {
       const doctorUnit = await Unit.findByPk(body.unit_id);
 
@@ -115,7 +113,7 @@ class DoctorController {
       return res.status(400).json({ error: 'Specified doctor was not found' });
     }
 
-    const deleted = await doctor.destroy();
+    const _deleted = await doctor.destroy();
 
     return res.json({ message: 'Specified doctor successful deleted' });
   }
