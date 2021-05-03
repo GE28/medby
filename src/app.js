@@ -32,8 +32,11 @@ class App {
     );
 
     this.middlewares();
+
     this.app.use(morgan('common'));
     this.app.use(routes);
+
+    this.queue();
   }
 
   middlewares() {
@@ -48,11 +51,13 @@ class App {
   }
 
   queue() {
-    this.queue = new Bull('availability', ...bullConfig.redis);
+    this.queue = new Bull('availability', bullConfig.redis);
 
     this.queue.empty();
 
     this.queue.process('updateTimes', availabilityJob);
+
+    this.queue.add('updateTimes', bullConfig.options);
 
     this.queue.add('updateTimes', bullConfig.options, {
       // must repeat according to appointments' time interval (15 minutes by default)

@@ -2,7 +2,7 @@ import Mongoose from 'mongoose';
 
 const AvailableTime = new Mongoose.Schema({
   doctor_id: {
-    type: Number,
+    type: String,
     required: true,
   },
   date: {
@@ -15,11 +15,11 @@ const AvailableTime = new Mongoose.Schema({
     default: false,
   },
   unit_id: {
-    type: Number,
+    type: String,
     required: true,
   },
   spec_id: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
