@@ -24,6 +24,6 @@ const AvailableTime = new Mongoose.Schema({
   },
 });
 
-AvailableTime.index({ doctor_id: 1, date: 1 }, { unique: true });
+AvailableTime.index({ unit_id: 1, spec_id: 1 }, { unique: true });
 
 export default Mongoose.model('AvailableTime', AvailableTime);
