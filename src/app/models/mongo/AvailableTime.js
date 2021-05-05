@@ -16,14 +16,16 @@ const AvailableTime = new Mongoose.Schema({
   },
   unit_id: {
     type: String,
+    index: true,
     required: true,
   },
   spec_id: {
     type: String,
+    index: true,
     required: true,
   },
 });
 
-AvailableTime.index({ unit_id: 1, spec_id: 1 }, { unique: true });
+AvailableTime.index({ date: 1, doctor_id: 1 }, { unique: true });
 
 export default Mongoose.model('AvailableTime', AvailableTime);

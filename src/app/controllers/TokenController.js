@@ -47,7 +47,7 @@ class TokenController {
 
     delete user.password_hash;
 
-    return res.json({ ...user, token });
+    return res.json({ user, token });
   }
 }
 
