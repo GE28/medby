@@ -18,7 +18,7 @@ class TokenController {
     try {
       body = await schema.validateAsync(req.body);
     } catch (err) {
-      return res.status(400).json({ error: 'Bad request' });
+      return res.status(401).json({ error: 'Incorrect email or password' });
     }
 
     const { password, email } = body;
@@ -31,7 +31,7 @@ class TokenController {
     });
 
     if (!user) {
-      return res.status(404).json({ error: 'Incorrect email or password' });
+      return res.status(401).json({ error: 'Incorrect email or password' });
     }
 
     const passwordMatching = await user.checkPassword(password);
@@ -42,7 +42,6 @@ class TokenController {
 
     user = user.get({ plain: true });
 
-    // User
     const token = sign({ userType: 'U', userId: user.id }, secret, options);
 
     delete user.password_hash;
