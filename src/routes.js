@@ -3,9 +3,9 @@ import { Router } from 'express';
 import AdminRoutes from './routes/adminRoutes';
 import UserRoutes from './routes/userRoutes';
 
-const publicRoutes = new Router();
+const routes = new Router();
 
-publicRoutes.use(UserRoutes);
-publicRoutes.use(AdminRoutes);
+routes.use(UserRoutes);
+routes.use(AdminRoutes);
 
-export default publicRoutes;
+export default routes;
