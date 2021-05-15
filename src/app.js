@@ -30,7 +30,9 @@ class App {
 
     this.middlewares();
 
-    this.app.use(morgan('common'));
+    this.app.use(
+      morgan(process.env.NODE_ENV === 'development' ? 'dev' : 'common')
+    );
     this.app.use(routes);
 
     this.queue();
