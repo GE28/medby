@@ -16,8 +16,8 @@ export default function tokenValidatorCall(target) {
     try {
       const decoded = verify(token, secret);
 
-      req.userType = decoded.userType; // userType
-      req.userId = decoded.userId; // userId
+      req.userType = decoded.userType;
+      req.userId = decoded.userId;
     } catch (err) {
       if (token === process.env.ADMIN_KEY) {
         req.userType = 'A'; // Admin
@@ -25,13 +25,14 @@ export default function tokenValidatorCall(target) {
         return res.status(401).json({ message: 'Expired or invalid token' });
     }
 
-    if (req.userType !== target) {
-      const { path } = req;
+    if (target)
+      if (req.userType !== target) {
+        const { path } = req;
 
-      return res
-        .status(403)
-        .json({ error: `You do not have permission to access ${path}` });
-    }
+        return res
+          .status(403)
+          .json({ error: `You do not have permission to access ${path}` });
+      }
 
     return next();
   };
