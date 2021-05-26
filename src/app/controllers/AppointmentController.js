@@ -3,20 +3,41 @@ import Appointment from '../models/Appointment';
 import AvailableTime from '../models/mongo/AvailableTime';
 import Doctor from '../models/Doctor';
 import User from '../models/User';
-import Speciality from '../models/Specialty';
+import Specialty from '../models/Specialty';
+import Unit from '../models/Unit';
 
 class AppointmentController {
   async index(req, res) {
     const page = Math.round(req.query.page) > 0 || 1;
+    const user_id = req.userId || req.body.user_id;
+
+    if (!user_id) {
+      return res.status(400).json({ error: 'You must provide a user UUID' });
+    }
 
     const appointmentList = await Appointment.findAll({
       offset: page * 10 - 10,
       limit: 10,
+      where: {
+        user_id,
+      },
       include: [
         {
           model: Doctor,
           as: 'doctor',
           attributes: ['name', 'spec_id', 'unit_id'],
+          include: [
+            {
+              model: Specialty,
+              as: 'specialty',
+              attributes: ['base_price', 'display_name'],
+            },
+            {
+              model: Unit,
+              as: 'unit',
+              attributes: ['name'],
+            },
+          ],
         },
         {
           model: User,
@@ -67,22 +88,27 @@ class AppointmentController {
   }
 
   async store(req, res) {
-    const user_id = req.userId;
-
     const schema = Joi.object({
-      time: Joi.date(),
-      doctor_id: Joi.string().uuid(),
-    }).options({ presence: 'required' });
+      time: Joi.date().required(),
+      doctor_id: Joi.string().uuid().required(),
+      user_id: Joi.string().uuid(),
+    });
 
-    let body;
+    let appointmentData;
+
+    const user_id = req.userId || req.body.user_id;
 
     try {
-      body = await schema.validateAsync(req.body);
+      appointmentData = await schema.validateAsync(req.body);
+
+      if (!user_id) {
+        return res.status(400).json({ error: 'You must provide a user UUID' });
+      }
     } catch (err) {
       return res.status(400).json({ error: 'Bad request' });
     }
 
-    const { doctor_id, time } = body;
+    const { doctor_id, time } = appointmentData;
 
     const availableTime = await AvailableTime.findOne({
       doctor_id,
@@ -90,15 +116,7 @@ class AppointmentController {
     });
 
     if (!availableTime) {
-      return res
-        .status(403)
-        .json({ error: 'Invalid time to schedule the appointment' });
-    }
-
-    const refDoctor = await Doctor.findByPk(user_id);
-
-    if (!refDoctor) {
-      return res.status(400).json({ error: 'Specified doctor was not found' });
+      return res.status(403).json({ error: 'Invalid data for an appointment' });
     }
 
     if (availableTime.taken) {
@@ -107,14 +125,23 @@ class AppointmentController {
         .json({ error: 'There is another appointment for this time' });
     }
 
-    const { base_price } = await Speciality.findByPk(refDoctor.spec_id);
-
-    body.user_id = user_id;
-    body.final_price = base_price;
-    body.status = 'S';
+    const doctor = await Doctor.findByPk(doctor_id, {
+      include: [
+        {
+          model: Specialty,
+          as: 'specialty',
+          attributes: ['base_price'],
+        },
+      ],
+    });
 
     try {
-      const created = await Appointment.create(body);
+      const created = await Appointment.create({
+        ...appointmentData,
+        user_id,
+        final_price: doctor.specialty.base_price,
+        status: 'S',
+      });
 
       const _updatedTime = await availableTime.update({ taken: true });
 
@@ -122,7 +149,7 @@ class AppointmentController {
 
       return res.json(data);
     } catch (err) {
-      return res.status(500).json({ error: 'Internal server error' });
+      return res.status(500).json({ error: 'Internal server error', ...err });
     }
   }
 
