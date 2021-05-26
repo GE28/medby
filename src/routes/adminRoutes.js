@@ -20,30 +20,42 @@ const middlewares = [tokenMiddleware, idValidator];
 
 adminRoutes.post('/upload/:id', uploadAvatar, AvatarController.store);
 
-adminRoutes.get('/users/', tokenMiddleware, UserController.index);
-adminRoutes.get('/users/:id', middlewares, UserController.show);
+adminRoutes.get('/a/users', tokenMiddleware, UserController.index);
+adminRoutes.get('/a/users/:id', middlewares, UserController.show);
 
-adminRoutes.get('/doctors/', tokenMiddleware, DoctorController.index);
-adminRoutes.get('/doctors/:id', middlewares, DoctorController.show);
-adminRoutes.post('/doctors', tokenMiddleware, DoctorController.store);
-adminRoutes.delete('/doctors/:id', middlewares, DoctorController.delete);
+adminRoutes.get('/a/doctors', tokenMiddleware, DoctorController.index);
+adminRoutes.get('/a/doctors/:id', middlewares, DoctorController.show);
+adminRoutes.post('/a/doctors', tokenMiddleware, DoctorController.store);
+adminRoutes.delete('/a/doctors/:id', middlewares, DoctorController.delete);
 
-adminRoutes.get('/units/', tokenMiddleware, UnitController.index);
-adminRoutes.get('/units/:id', middlewares, UnitController.show);
-adminRoutes.put('/units/:id', middlewares, UnitController.update);
-adminRoutes.post('/units', tokenMiddleware, UnitController.store);
-adminRoutes.delete('/units/:id', middlewares, UnitController.delete);
+adminRoutes.get('/a/units', tokenMiddleware, UnitController.index);
+adminRoutes.get('/a/units/:id', middlewares, UnitController.show);
+adminRoutes.put('/a/units/:id', middlewares, UnitController.update);
+adminRoutes.post('/a/units', tokenMiddleware, UnitController.store);
+adminRoutes.delete('/a/units/:id', middlewares, UnitController.delete);
 
-adminRoutes.get('/specialties/', tokenMiddleware, SpecialtyController.index);
-adminRoutes.get('/specialties/:id', middlewares, SpecialtyController.show);
-adminRoutes.put('/specialties/:id', middlewares, SpecialtyController.update);
-adminRoutes.post('/specialties', tokenMiddleware, SpecialtyController.store);
+adminRoutes.get('/a/specialties', tokenMiddleware, SpecialtyController.index);
+adminRoutes.get('/a/specialties/:id', middlewares, SpecialtyController.show);
+adminRoutes.put('/a/specialties/:id', middlewares, SpecialtyController.update);
+adminRoutes.post('/a/specialties', tokenMiddleware, SpecialtyController.store);
 
-adminRoutes.get('/timetables/', tokenMiddleware, TimetableController.index);
-adminRoutes.delete('/timetables/:id', middlewares, TimetableController.delete);
-adminRoutes.post('/timetables', tokenMiddleware, TimetableController.store);
-adminRoutes.delete('/timetables/:id', middlewares, TimetableController.delete);
+adminRoutes.get('/a/timetables', tokenMiddleware, TimetableController.index);
+adminRoutes.delete(
+  '/a/timetables/:id',
+  middlewares,
+  TimetableController.delete
+);
+adminRoutes.post('/a/timetables', tokenMiddleware, TimetableController.store);
+adminRoutes.delete(
+  '/a/timetables/:id',
+  middlewares,
+  TimetableController.delete
+);
 
-adminRoutes.get('/appointments/', tokenMiddleware, AppointmentController.index);
+adminRoutes.get(
+  '/a/appointments',
+  tokenMiddleware,
+  AppointmentController.index
+);
 
 export default adminRoutes;
