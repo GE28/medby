@@ -35,6 +35,7 @@ class AvailableTimeController {
 
     const availableTimeList = await AvailableTime.find({
       ...body,
+      taken: false,
       date: {
         $gte: min_date,
         ...(max_date && { $lt: max_date }),
