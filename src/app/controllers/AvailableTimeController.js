@@ -5,34 +5,41 @@ import AvailableTime from '../models/mongo/AvailableTime';
 
 class AvailableTimeController {
   async index(req, res) {
-    const minPastHours = 1;
+    const minPastHours = process.env.PAST_HOURS;
 
-    const schema = Joi.object({
-      doctor_id: Joi.string().uuid(),
-      min_date: Joi.date().default(addHours(new Date(), minPastHours)),
+    const querySchema = Joi.object({
+      min_date: Joi.date(),
       max_date: Joi.date(),
-      unit_id: Joi.string().uuid(),
-      spec_id: Joi.string().uuid(),
       page: Joi.number().integer().min(1).default(1),
     });
 
-    let query;
+    const bodySChema = Joi.object({
+      doctor_id: Joi.string().uuid(),
+      unit_id: Joi.string().uuid(),
+      spec_id: Joi.string().uuid(),
+    });
+
+    let query, body;
 
     try {
-      query = await schema.validateAsync(req.query);
+      query = await querySchema.validateAsync(req.query);
+      body = await bodySChema.validateAsync(req.body);
     } catch (err) {
-      return res.status(400).json({ error: 'Bad request' });
+      return res
+        .status(400)
+        .json({ error: 'Bad request', details: { ...err } });
     }
 
-    const { doctor_id, spec_id, unit_id, page } = query;
+    const { page, max_date } = query;
+    const min_date = query.min_date || addHours(new Date(), minPastHours);
 
-    const filter = {
-      ...(doctor_id && { doctor_id }),
-      ...(spec_id && { spec_id }),
-      ...(unit_id && { unit_id }),
-    };
-
-    const availableTimeList = await AvailableTime.find(filter)
+    const availableTimeList = await AvailableTime.find({
+      ...body,
+      date: {
+        $gte: min_date,
+        ...(max_date && { $lt: max_date }),
+      },
+    })
       .skip(page * 10 - 10)
       .limit(10);
 
