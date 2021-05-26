@@ -8,11 +8,11 @@ class AvailableTimeController {
     const minPastHours = 1;
 
     const schema = Joi.object({
-      doctor_id: Joi.number().uuid(),
+      doctor_id: Joi.string().uuid(),
       min_date: Joi.date().default(addHours(new Date(), minPastHours)),
       max_date: Joi.date(),
-      unit_id: Joi.number().uuid(),
-      spec_id: Joi.number().uuid(),
+      unit_id: Joi.string().uuid(),
+      spec_id: Joi.string().uuid(),
       page: Joi.number().integer().min(1).default(1),
     });
 

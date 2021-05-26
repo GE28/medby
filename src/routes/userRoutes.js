@@ -11,6 +11,9 @@ const userRoutes = new Router();
 
 userRoutes.post('/register', UserController.store);
 userRoutes.post('/login', TokenController.store);
+userRoutes.get('/verify', tokenValidator(null), (req, res) =>
+  res.status(200).json({ message: 'ok' })
+);
 
 const tokenMiddleware = tokenValidator('U');
 

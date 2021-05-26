@@ -71,7 +71,7 @@ class AppointmentController {
 
     const schema = Joi.object({
       time: Joi.date(),
-      doctor_id: Joi.number().integer().min(1),
+      doctor_id: Joi.string().uuid(),
     }).options({ presence: 'required' });
 
     let body;
@@ -89,16 +89,16 @@ class AppointmentController {
       date: time,
     });
 
+    if (!availableTime) {
+      return res
+        .status(403)
+        .json({ error: 'Invalid time to schedule the appointment' });
+    }
+
     const refDoctor = await Doctor.findByPk(user_id);
 
     if (!refDoctor) {
       return res.status(400).json({ error: 'Specified doctor was not found' });
-    }
-
-    if (!availableTime) {
-      return res
-        .status(404)
-        .json({ error: 'Invalid time to schedule the appointment' });
     }
 
     if (availableTime.taken) {

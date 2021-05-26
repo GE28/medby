@@ -10,7 +10,7 @@ class TokenController {
   async store(req, res) {
     const schema = Joi.object({
       email: Joi.string().email(),
-      password: Joi.string().alphanum().min(8).max(20),
+      password: Joi.string().alphanum(),
     }).options({ presence: 'required' });
 
     let body;
