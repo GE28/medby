@@ -1,4 +1,6 @@
 import Joi from '@hapi/joi';
+import { validate } from 'gerador-validador-cpf';
+
 import User from '../models/User';
 
 class UserController {
@@ -51,10 +53,17 @@ class UserController {
       name: Joi.string().max(72),
       email: Joi.string().email(),
       password: Joi.string().alphanum().min(8).max(20),
-      cpf: Joi.string().length(11),
+      cpf: Joi.string()
+        .length(11)
+        .custom((value) => {
+          if (!validate(value)) throw new Joi.ValidationError('Not valid cpf');
+
+          return value;
+        }, 'validate cpf'),
     }).options({ presence: 'required' });
 
     let body;
+    const { cpf } = req.body;
 
     try {
       body = await schema.validateAsync(req.body);
@@ -62,21 +71,35 @@ class UserController {
       return res.status(400).json({ error: 'Bad request' });
     }
 
+    body.cpf = cpf;
+
+    let created;
     try {
-      const _created = await User.create(body);
+      created = await User.create(body);
+
+      created = JSON.parse(JSON.stringify(created));
+
+      delete created.password;
+      delete created.password_hash;
+      delete created.created_at;
+      delete created.updated_at;
+
+      return res.status(201).json(JSON.parse(JSON.stringify(created)));
     } catch (err) {
       if (err.fields) {
         if (err.fields.email)
-          return res.status(409).json({ error: 'Email already in use' });
+          return res
+            .status(409)
+            .json({ error: 'Email already in use', fields: err.fields });
 
         if (err.fields.cpf)
-          return res.status(409).json({ error: 'CPF already in use' });
+          return res
+            .status(409)
+            .json({ error: 'CPF already in use', fields: err.fields });
       }
 
       return res.status(500).json({ error: 'Internal server error' });
     }
-
-    return res.status(201).json(body);
   }
 }
 
