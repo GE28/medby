@@ -22,11 +22,13 @@ userRoutes.get('/profile', tokenMiddleware, UserController.show);
 const middlewares = [tokenMiddleware, idValidator];
 
 userRoutes.get(
-  '/appointments/available/',
+  '/appointments/available',
   tokenMiddleware,
   ATimeController.index
 );
-userRoutes.get('/appointments/:id/', middlewares, AppointmentController.show);
-userRoutes.put('/appointments/:id/', middlewares, AppointmentController.update);
+userRoutes.get('/appointments/', middlewares, AppointmentController.index);
+userRoutes.get('/appointments/:id', middlewares, AppointmentController.show);
+userRoutes.post('/appointments/', middlewares, AppointmentController.store);
+userRoutes.put('/appointments/:id', middlewares, AppointmentController.update);
 
 export default userRoutes;
