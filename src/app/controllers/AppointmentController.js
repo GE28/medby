@@ -25,7 +25,7 @@ class AppointmentController {
         {
           model: Doctor,
           as: 'doctor',
-          attributes: ['name', 'spec_id', 'unit_id'],
+          attributes: ['avatar', 'name', 'spec_id', 'unit_id'],
           include: [
             {
               model: Specialty,
