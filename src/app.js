@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
 
+import { mkdirSync } from 'fs';
 import { join } from 'path';
 
 import './config/dotenv';
@@ -53,5 +54,9 @@ class App {
     this.queue = queue;
   }
 }
+
+mkdirSync(join(__dirname, process.env.STATIC_PATH || '../../uploads'), {
+  recursive: true,
+});
 
 export default new App().app;

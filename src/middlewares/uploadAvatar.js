@@ -29,17 +29,17 @@ const storage = multer.diskStorage({
       null,
       join(
         __dirname,
+        '..',
         process.env.STATIC_PATH
           ? `${process.env.STATIC_PATH}/avatars`
-          : '../../uploads/avatars'
+          : '../uploads/avatars'
       )
     );
   },
   filename(req, file, cb) {
-    const uniqueName =
-      Date.now().toString(36) +
-      Math.round(Math.random() * 1e5).toString(36) +
-      extname(file.originalname);
+    const uniqueName = `${Date.now().toString(36)}${Math.round(
+      Math.random() * 1e5
+    ).toString(36)}${extname(file.originalname)}`;
     cb(null, uniqueName);
   },
 });

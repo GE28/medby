@@ -1,4 +1,6 @@
 import { promises as fs } from 'fs';
+import { join } from 'path';
+
 import Joi from '@hapi/joi';
 import Doctor from '../models/Doctor';
 import User from '../models/User';
@@ -40,7 +42,15 @@ class AvatarController {
 
     if (avatar) {
       try {
-        const _deleted_file = await fs.unlink(avatar);
+        const _deleted_file = await fs.unlink(
+          join(
+            __dirname,
+            '../../',
+            process.env.STATIC_PATH
+              ? `${process.env.STATIC_PATH}/avatars/${avatar}`
+              : `../uploads/avatars/${avatar}`
+          )
+        );
       } catch (err) {
         if (!err.code === 'ENOENT') {
           res.status(500).json({ error: 'Internal server error' });
@@ -53,7 +63,7 @@ class AvatarController {
       }
     }
 
-    const updated = await entityData.update({ avatar: file.path });
+    const updated = await entityData.update({ avatar: file.filename });
     return res.json(updated);
   }
 }
