@@ -63,7 +63,11 @@ class AvatarController {
       }
     }
 
-    const updated = await entityData.update({ avatar: file.filename });
+    const updated = await (
+      await entityData.update({ avatar: file.filename })
+    ).get({ plain: true });
+    delete updated.password_hash;
+
     return res.json(updated);
   }
 }
