@@ -17,8 +17,9 @@ const adminRoutes = new Router();
 const tokenMiddleware = tokenValidator('A');
 
 const middlewares = [tokenMiddleware, idValidator];
+const uploadRoutes = [tokenMiddleware, uploadAvatar];
 
-adminRoutes.post('/upload/:id', uploadAvatar, AvatarController.store);
+adminRoutes.post('/doctors/upload/:id', uploadRoutes, AvatarController.store);
 
 adminRoutes.get('/a/users', tokenMiddleware, UserController.index);
 adminRoutes.get('/a/users/:id', middlewares, UserController.show);
@@ -40,11 +41,6 @@ adminRoutes.put('/a/specialties/:id', middlewares, SpecialtyController.update);
 adminRoutes.post('/a/specialties', tokenMiddleware, SpecialtyController.store);
 
 adminRoutes.get('/a/timetables', tokenMiddleware, TimetableController.index);
-adminRoutes.delete(
-  '/a/timetables/:id',
-  middlewares,
-  TimetableController.delete
-);
 adminRoutes.post('/a/timetables', tokenMiddleware, TimetableController.store);
 adminRoutes.delete(
   '/a/timetables/:id',
