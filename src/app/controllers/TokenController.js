@@ -34,9 +34,9 @@ class TokenController {
       return res.status(401).json({ error: 'Incorrect email or password' });
     }
 
-    const passwordMatching = await user.checkPassword(password);
+    const passwordMatches = await user.checkPassword(password);
 
-    if (!passwordMatching) {
+    if (!passwordMatches) {
       return res.status(401).json({ error: 'Incorrect email or password' });
     }
 
