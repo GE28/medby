@@ -9,9 +9,9 @@ const REDIS_HOST = `${host}:${REDIS_PORT}`;
 export default {
   options: {
     // the client can book an appointment for up to (value) weeks after the current date
-    allowedFutureWeeks: process.env.FUTURE_WEEKS || 3,
+    allowedFutureWeeks: Number(process.env.FUTURE_WEEKS) || 3,
     // the client can book or cancel an appointment up to (value) hours before it's time
-    minPastHours: process.env.PAST_HOURS || 6,
+    minPastHours: Number(process.env.PAST_HOURS) || 6,
   },
   redis: {
     url: process.env.REDIS_URL || `redis://:${REDIS_PASSWORD}@${REDIS_HOST}`,
