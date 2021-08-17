@@ -12,7 +12,8 @@ class Appointment extends Model {
         time: Sequelize.DATE,
         final_price: Sequelize.DECIMAL(7, 2),
 
-        /* 'S': scheduled (default); 'C': cancelled; 'D': done */
+        /* 'S': scheduled (default); 'C': canceled; 
+           'B': canceled (belatedly); 'D': done */
         status: Sequelize.STRING(1),
       },
       { sequelize, tableName: 'appointments' }
