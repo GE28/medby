@@ -19,7 +19,7 @@ const tokenMiddleware = tokenValidator('A');
 const middlewares = [tokenMiddleware, idValidator];
 const uploadRoutes = [tokenMiddleware, uploadAvatar];
 
-adminRoutes.post('/doctors/upload/:id', uploadRoutes, AvatarController.store);
+adminRoutes.post('/a/doctors/upload/:id', uploadRoutes, AvatarController.store);
 
 adminRoutes.get('/a/users', tokenMiddleware, UserController.index);
 adminRoutes.get('/a/users/:id', middlewares, UserController.show);
