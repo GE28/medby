@@ -33,7 +33,7 @@ npm install
 Após isso, todos os arquivos necessários para a execução estarão na máquina
 
 ## Como configurar
-Para que a aplicação funcione, é necessário ter o PostgreSQL, o MongoDB e o Redis em execução. É recomendado utilizar uma solução de contêineres, como o [Docker](https://www.docker.com/) que foi o escolhido durante o desenvolvimento deste projeto. Após isso, um arquivo `.env` deve ser criado e preenchido [conforme o exemplo](./env.example). Para utilizar o MongoDB, é necessário um banco de dados em nuvem executando no [Atlas](https://www.mongodb.com/atlas/database). que pode ser criado gratuitamente.
+Para que a aplicação funcione, é necessário ter o PostgreSQL, o MongoDB e o Redis em execução. É recomendado utilizar uma solução de contêineres, como o [Docker](https://www.docker.com/) que foi o escolhido durante o desenvolvimento deste projeto. Após isso, um arquivo `.env` deve ser criado e preenchido [conforme o exemplo](./.env.example). Para utilizar o MongoDB, é necessário um banco de dados em nuvem executando no [Atlas](https://www.mongodb.com/atlas/database). que pode ser criado gratuitamente.
 
 **(Opcional)** Garantidas essas exigências, execute o seguinte comando no diretório onde estão os arquivos deste projeto para preencher o banco de dados PostgreSQL com dados de exemplo:
 ```bash
